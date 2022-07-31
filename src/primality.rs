@@ -1,5 +1,17 @@
-fn is_prime(number: i64) -> bool {
-    false
+pub fn is_prime(number: i64) -> bool {
+    if number <= 3 {
+        return number > 1;
+    }
+    if number % 2 == 0 || number % 3 == 0 {
+        return false;
+    }
+    let upper_limit = (number as f64).sqrt().floor() as i64;
+    for i in (5..=upper_limit).step_by(6){
+        if number % i == 0 || number % (i + 2) == 0 {
+            return false;
+        }
+    }
+    true
 }
 
 #[cfg(test)]
@@ -45,6 +57,14 @@ mod test {
 
     #[test]
     fn large_primes() {
-        
+        let _large_primes = [
+            7829, 7841, 7853, 7867,
+            7873, 7877, 7879, 7883,
+            7901, 7907, 7919,
+            479001599, 87178291199,
+        ];
+        for number in _large_primes {
+            assert!(is_prime(number));
+        }
     }
 }
